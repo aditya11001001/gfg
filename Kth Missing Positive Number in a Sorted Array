@@ -1,0 +1,19 @@
+public int kthMissing(int[] arr, int k) {
+        // code here
+        int n = arr.length;
+        int val = 1;
+        int idx=0;
+        while(k>0){
+            if(idx>=n){
+                k--;
+            }else if(val!=arr[idx]){
+                k--;
+            }else{
+                idx++;
+            }
+            if(k!=0){
+                val++;
+            }
+        }
+        return val;
+    }
