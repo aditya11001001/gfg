@@ -1,0 +1,22 @@
+public int cheakLen(HashSet<Integer> set, int val){
+        int len = 1;
+        while(set.contains(val+1)){
+            len++;
+            val++;
+        }
+        
+        return len;
+    }
+    public int longestConsecutive(int[] arr) {
+        // code here
+        int len = 0;
+        HashSet<Integer> set = new HashSet<>();
+        
+        for(int i=0; i<arr.length; i++){
+            set.add(arr[i]);
+        }
+        
+        for(int i=0; i<arr.length; i++){
+            len = Math.max(cheakLen(set, arr[i]), len);
+        }
+       
