@@ -1,0 +1,56 @@
+class Solution {
+    public static Node[] reverseLinkedList(Node head){
+        Node prev = null;
+        Node curr = head;
+        while(curr!=null){
+            Node nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return new Node[]{prev, head};
+    }
+    public static Node reverseKGroup(Node head, int k) {
+        // code here
+        if(head==null || k==1) return head;
+        
+        Node dummy = new Node(0);
+        dummy.next = head;
+        Node prevGroupTail = dummy;
+        
+        while(true){
+            Node groupHead = prevGroupTail.next;
+            Node groupTail = groupHead;
+            
+            int count = 0;
+            
+            while(groupTail!=null && count<k){
+                groupTail = groupTail.next;
+                count++;
+            }
+            
+            if(count<k){
+                Node[] reversed = reverseLinkedList(groupHead);
+                prevGroupTail.next = reversed[0];
+                break;
+            }
+            
+            Node nextGroupHead = groupTail;
+            Node currentGroupTail = groupHead;
+            for(int i=0; i<k-1; i++){
+                currentGroupTail = currentGroupTail.next;
+            }
+            currentGroupTail.next = null;
+            
+            Node[] reversed = reverseLinkedList(groupHead);
+            Node newHead = reversed[0];
+            Node newTail = reversed[1];
+                
+            prevGroupTail.next = newHead;
+            newTail.next = nextGroupHead;
+                
+            prevGroupTail = newTail;
+        }
+        return dummy.next;
+    }
+}
